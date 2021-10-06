@@ -1,7 +1,18 @@
 const express = require('express');
 const app = express();
+
 const mongoose = require('mongoose');
 const path = require('path');
+const session = require('express-session');
+
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const flash = require('connect-flash');
+const Users = require('./models/users');
+
+// middleware functions
+const { isLoggedIn } = require('./mw');
+
 
 // database connection
 mongoose.connect('mongodb://localhost:27017/twitter-clone',
@@ -22,12 +33,35 @@ mongoose.connect('mongodb://localhost:27017/twitter-clone',
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 
-// app.use(express.static(path.join(__dirname, '/public')));
-// app.use(express.urlencoded({ extended: true }))
+app.use(express.static('./public'));
+app.use(express.urlencoded({ extended: true }))
 
 
-app.get('/', (req, res)=>{
-    res.render('home');
+// express sessions
+app.use(session({
+    secret: 'yeHaiApanKaSecret',
+    resave: false,
+    saveUninitialized: true
+}))
+
+
+app.use(flash());
+// configuring passport sessions
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(Users.authenticate()));
+passport.serializeUser(Users.serializeUser());
+passport.deserializeUser(Users.deserializeUser());
+
+
+// routes
+const authRoutes = require('./routes/auth');
+app.use(authRoutes);
+
+
+app.get('/', isLoggedIn, (req, res) => {
+    res.render('home');  
 })
 
 
