@@ -21,7 +21,14 @@ const userSchema = new mongoose.Schema({
     profilePhoto: {
         type: String, 
         default: '/images/profilePhoto.jpeg'
-    } 
+    },
+    likes:[
+        {
+            // cross referencing the Posts db, to store the ids of Posts user has liked
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Posts'
+        }
+    ]
 });
 
 userSchema.plugin(passwordLocalMongoose);

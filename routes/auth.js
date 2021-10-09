@@ -21,7 +21,7 @@ router.post('/signup', async(req, res)=>{
     
         let new_user = await Users.register(user, req.body.password);
     
-        res.status(200).send(newUser);
+        res.status(200).send(new_user);
     }
     catch (error) {
         req.flash('error', error.message);
