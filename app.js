@@ -34,7 +34,8 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 
 app.use(express.static('./public'));
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true })) // form data 
+app.use(express.json());
 
 
 // express sessions
@@ -57,7 +58,18 @@ passport.deserializeUser(Users.deserializeUser());
 
 // routes
 const authRoutes = require('./routes/auth');
+
+
+// APIs
+const postsApiRoute = require('./routes/api/posts');
+
+
+// using routes
 app.use(authRoutes);
+
+
+// using APIs
+app.use(postsApiRoute);
 
 
 app.get('/', isLoggedIn, (req, res) => {
