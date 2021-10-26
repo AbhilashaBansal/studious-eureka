@@ -13,11 +13,13 @@
             <div class="col-lg-6 mt-3 cont1">
                 <h6 class="display-6 text-center">Sign Up</h6>
 
-                <div class="mb-3">
+                <%- include("./partials/flash") %>
+
+                <!-- <div class="mb-3">
                     <%if (message && message.length) {%>
                         <p style="color: red;"><%= message %></p>
                     <%}%>
-                </div>
+                </div> -->
     
 
                 <form action="/signup" method="POST">
@@ -37,14 +39,15 @@
                     <div class="mb-3">
                         <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                     </div>
-
-                    <div class="mb-3">
-                        <p><a href="/login">Already have an account? Login here.</a></p>
-                    </div>
                    
                     <div class="d-grid gap-2">
                         <button class="btn btn-primary" type="submit">Sign Up </button>
                     </div>
+
+                    <div class="mb-3">
+                        <p><a href="/login">Already have an account? Login here.</a></p>
+                    </div>
+                    
                   </form>
 
             </div>

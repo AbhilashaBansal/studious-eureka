@@ -7,7 +7,7 @@ const passport = require('passport');
 
 // Sign Up
 router.get('/signup', (req, res)=>{
-    res.render('signup', {message: req.flash('error')});
+    res.render('signup');
 })
 
 router.post('/signup', async(req, res)=>{
@@ -20,8 +20,11 @@ router.post('/signup', async(req, res)=>{
         }
     
         let new_user = await Users.register(user, req.body.password);
+
+        req.flash("success", "Signed up successfully!");
+        res.redirect('/login');
     
-        res.status(200).send(new_user);
+        // res.status(200).send(new_user);
     }
     catch (error) {
         req.flash('error', error.message);
@@ -39,7 +42,9 @@ router.get('/login', (req, res) => {
 router.post('/login', passport.authenticate('local',
     {
         failureRedirect: '/login',
+        failureFlash: true
     }), 
+    // async?
     (req, res) => {
         res.redirect('/');
     }

@@ -37,9 +37,7 @@ function createTweetHtml(tweetData) {
     }
 
     let displayName = postedBy.firstName + " " + postedBy.lastName;
-    // let timestamp = timeDifference(new Date(),new Date(tweetData.createdAt));
-    let timestamp = 0;
-
+    let timestamp = timeDifference(new Date(),new Date(tweetData.createdAt));
 
     return `<div class='post' data-id='${tweetData._id}'>
                 <div class='cont1'>

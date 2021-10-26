@@ -11,7 +11,7 @@ const flash = require('connect-flash');
 const Users = require('./models/users');
 
 // middleware functions
-const { isLoggedIn } = require('./mw');
+const {isLoggedIn} = require('./mw');
 
 
 // database connection
@@ -45,8 +45,8 @@ app.use(session({
     saveUninitialized: true
 }))
 
-
 app.use(flash());
+
 // configuring passport sessions
 app.use(passport.initialize());
 app.use(passport.session());
@@ -54,6 +54,14 @@ app.use(passport.session());
 passport.use(new LocalStrategy(Users.authenticate()));
 passport.serializeUser(Users.serializeUser());
 passport.deserializeUser(Users.deserializeUser());
+
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    res.locals.currentUser = req.user;
+    next();
+})
 
 
 // routes
@@ -72,6 +80,7 @@ app.use(authRoutes);
 app.use(postsApiRoute);
 
 
+// using middleware to check if logged in !
 app.get('/', isLoggedIn, (req, res) => {
     res.render('main');  
 })
