@@ -3,6 +3,10 @@
     --buttonHoverBg: #d4edff;
     --lightGrey: rgb(230, 236, 240);
     --spacing: 15px;
+
+    --blue: #1fa2f1;
+    --greyText: rgb(101, 119, 134);
+    --greyButtonText: rgba(0, 0, 0, 0.34);
 }
   
 body{
@@ -27,7 +31,8 @@ nav a {
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    color: var(--twitter-ka-color);
+    /* color: var(--twitter-ka-color); */
+    color: var(--blue);
     /* color: black; */
 
     border-radius: 50%;
@@ -36,6 +41,7 @@ nav a {
   
 nav a:hover {
     background-color: var(--buttonHoverBg);
+    color: var(--blue);
     border-radius: 50%;
 }
   
@@ -101,11 +107,12 @@ textarea:focus {
 }
   
 #createTweetBtn {
-    background-color: var(--twitter-ka-color);
+    /* background-color: var(--twitter-ka-color); */
+    background-color: var(--blue);
     color: white;
     border: none;
     border-radius: 5px;
-    padding: 5px 15px;
+    padding: 7px 15px;
 }
 
 .post {
@@ -161,7 +168,18 @@ textarea:focus {
 .header1 span {
     padding-right: 5px;
 }
+
+/* reply modal */
+.modal.post-cont{
+    border: none;
+    padding: 0;
+    padding-top: var(--spacing);
+}
   
+.reply-line1 {
+    color: var(--greyText);
+}
+
   /* .post-btnCont button {
     border: none;
     background-color: white;

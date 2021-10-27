@@ -1,44 +1,40 @@
 <%- include("./partials/header") %>
 
-<title>Main Page</title>
-<link rel="stylesheet" href="./css/main.css">
+<title>Home Page</title>
+<link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
+    <div class="container">
+        <div class="row">
+            <%- include("./partials/navbar") %>
 
-    <div class="row">
-        <nav class="col-2">
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fas fa-home"></i></a>
-            <a href="#"><i class="fas fa-search"></i></a>
-            <a href="#"><i class="fas fa-bell"></i></a>
-            <a href="#"><i class="far fa-envelope"></i></a>
-            <a href="#"><i class="fas fa-user"></i></a>
-            <a href="#"><i class="fas fa-sign-out-alt"></i></a>
-        </nav>
+            <div class="main-cont col-10 col-md-8 col-lg-6">
+                <h1 class="fw-bold title-cont">Home</h1>
+                <!-- --------- -->
 
-        <div class="main-cont col-10 col-md-8 col-lg-6">
-            <h1 class="fw-bold title-cont">Home</h1>
+                <%- include("./partials/modal") %>
+                <!-- ----- -->
 
-            <div class="mb-3 post-cont">
-                <div class="profile-pic-cont">
-                    <img src="/images/profilePhoto.jpeg" alt="User Profile Picture">
+                <div class="mb-3 post-cont">
+                    <div class="profile-pic-cont">
+                        <img src="images/profilePhoto.jpeg" alt="User Profile Picture">
+                    </div>
+                    <div class="create-tweet-cont">
+                        <textarea id="tweet-text" cols="30" rows="3" placeholder="Whats's happening?"></textarea>
+                        <button id="createTweetBtn">Post</button>
+                    </div>
+                
                 </div>
-                <div class="create-tweet-cont">
-                    <textarea id="tweet-text" cols="30" rows="3" placeholder="Whats's happening?"></textarea>
-                    <button id="createTweetBtn">Post</button>
+
+                <div>
+                    <div class="all-tweets-cont"></div>
                 </div>
-               
+
             </div>
 
-            <div>
-                <div class="all-tweets-cont"></div>
-            </div>
-
+            <div class="d-none d-md-block col-md-2 col-lg-4">Sidebar</div>
         </div>
-
-        <div class="d-none d-md-block col-md-2 col-lg-4">Sidebar</div>
     </div>
-
 
 
     <script src="./js/main.js"></script>

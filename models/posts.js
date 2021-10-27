@@ -15,7 +15,12 @@ const postSchema = new mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:'Users'
         }
-    ]
+    ],
+    replyingTo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Posts'
+    }
+
 }, {timestamps: true})
 
 const Posts = mongoose.model("Posts", postSchema);
