@@ -13,11 +13,11 @@ async function refreshTweets() {
 
 refreshTweets();
 
-
 // create a new tweet
 $('#createTweetBtn').click(async () => {
     let tweetText = $('#tweet-text').val();
-    // console.log(tweetText);
+    console.log(tweetText);
+    console.log($('#tweet-text'));
 
     let newTweet = await axios.post('/api/post', {content: tweetText});
     // console.log(newTweet);
@@ -39,6 +39,8 @@ function createTweetHtml(tweetData) {
     let displayName = postedBy.firstName + " " + postedBy.lastName;
     let timestamp = timeDifference(new Date(),new Date(tweetData.createdAt));
 
+    let replyingTo = tweetData.replyingTo ? `Replying to ${displayName}` : "";
+
     return `<div class='post' data-id='${tweetData._id}'>
                 <div class='cont1'>
                     <div class='profile-pic-cont'>
@@ -49,13 +51,14 @@ function createTweetHtml(tweetData) {
                             <a href='/profile/${postedBy.username}' class='post-displayName'>${displayName}</a>
                             <span class='post-username'>@${postedBy.username}</span>
                             <span class='post-date'>${timestamp}</span>
+                            <div class="reply-line1">${replyingTo}</div>
                         </div>
                         <div class='postBody'>
                             <span>${tweetData.content}</span>
                         </div>
                         <div class='postFooter'>
                             <div class='post-btnCont'>
-                                <button>
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#replyModal">
                                     <i class='far fa-comment'></i>
                                 </button>
                             </div>
@@ -99,6 +102,38 @@ function getPostIdFromElement(element){
     let postId = rootElement.data().id;
     return postId;
 }
+
+
+// reply to a post
+$('#submitReplyBtn').click(async (event) => {
+
+    let element = $(event.target);
+    let postText = $('#reply-text-cont').val();
+
+    let replyingTo = element.attr('data-id');
+
+    let postData = await axios.post('/api/post', { content: postText, replyingTo: replyingTo });
+    $('#replyModal').modal('toggle');
+    refreshTweets();
+
+})
+
+
+$('#replyModal').on('show.bs.modal', async (event) => {
+
+    let button = $(event.relatedTarget);
+    let postId = getPostIdFromElement(button);
+
+    $('#submitReplyBtn').attr('data-id', postId);
+
+    let postData = await axios.get(`/api/posts/${postId}`);
+    let html = createTweetHtml(postData.data);
+
+    $('#original-post-cont').empty();
+
+    $('#original-post-cont').append(html);
+
+})
 
 
 // time stamp to be displayedo on tweets

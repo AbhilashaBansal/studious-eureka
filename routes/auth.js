@@ -22,7 +22,7 @@ router.post('/signup', async(req, res)=>{
         let new_user = await Users.register(user, req.body.password);
 
         req.flash("success", "Signed up successfully!");
-        res.redirect('/login');
+        res.redirect('/login');     // review 
     
         // res.status(200).send(new_user);
     }
